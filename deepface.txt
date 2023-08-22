@@ -1,0 +1,18 @@
+INSTALL DEEPFACE TO CENTOS7
+pip3 install deepface
+
+# some errors might occur
+# if you get an error that relates to Could not build wheels for opencv-python, 
+# perform the following steps
+
+#update Compiler, first, enable the SCL repo..
+sudo yum install centos-release-scl
+
+#install the updated compiler
+sudo yum install devtoolset-8-gcc devtoolset-8-gcc-c++
+
+#update compilers by activating the environment
+scl enable devtoolset-8 bash
+
+#once done with this, run your python script
+ 

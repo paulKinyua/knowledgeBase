@@ -1,0 +1,191 @@
+REMOVE APACHE FROM SERVER:
+sudo yum remove httpd httpd-tools (Remove apache packages)
+sudo rm -rf /etc/httpd (Remove config files)
+
+--Disable and remove services--
+sudo systemctl disable httpd
+sudo systemctl stop httpd
+----
+
+httpd -v (confirm removal)
+
+sudo yum autoremove (Remove unused dependancies)
+
+
+REMOVE PHP FROM SERVER:
+sudo yum remove php php-* (Remove php packages)
+sudo rm -rf /etc/php (Remove configuration files)
+php -v (confirm  removal)
+sudo yum autoremove (Remove unused dependancies)
+
+
+INSTALL APACHE
+sudo yum update (update OS)
+
+---allow web traffic through the firewall---
+sudo firewall-cmd --add-service=http --permanent && sudo firewall-cmd --add-service=https --permanent
+sudo systemctl restart firewalld
+------
+sudo yum install httpd (install apache using yum)
+https://www.linode.com/docs/guides/install-and-configure-apache-on-centos-7/
+sudo systemctl enable httpd.service (enable apache to start at boot)
+sudo systemctl restart httpd.service (restart the service)
+
+
+INSTALL MYSQL
+sudo yum update (update OS)
+yum install wget(wget will be needed for the installation)
+
+---download and add repo then update---
+wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+sudo rpm -ivh mysql-community-release-el7-5.noarch.rpm
+yum update
+------
+
+---install mysql and start the service---
+sudo yum install mysql-server
+sudo systemctl start mysqld
+------
+
+sudo mysql_secure_installation (harden mysql server security)
+https://www.linode.com/docs/guides/how-to-install-mysql-on-centos-7/
+
+
+INSTALL PHP
+sudo yum update (update system)
+sudo yum install epel-release (enable EPEL repo)
+sudo yum install https://rpms.remirepo.net/enterprise/remi-release-7.rpm (install remi repo)
+sudo yum-config-manager --enable remi-php{latest_version} (enable remi repo for PHP)
+sudo yum install php (install php)
+sudo yum install php php-cli php-fpm php-mysql php-json php-xml php-gd php-opcache (install additional php extensions)
+php -v (check version)
+
+---Start and enable php requests---
+sudo systemctl start php-fpm
+sudo systemctl enable php-fpm
+------
+
+
+INSTALL PHPMYADMIN
+---Make sure EPEL Repo is enabled---
+cd ~
+wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+sudo rpm -ivh epel-release*
+------
+
+sudo yum install php-mcrypt (install mycrypt)
+sudo service httpd restart (restart apache)
+
+sudo yum install phpmyadmin (install phpmyadmin)
+
+---create a symbolic link between phpmyadmin and project root directory---
+cd /var/www/html
+sudo ln -s /usr/share/phpmyadmin
+------
+
+---configure phpmyadmin---
+- access /etc/httpd/conf.d/phpMyAdmin.conf file and change from 
+	Require ip 127.0.0.1
+        Require ip ::1
+		to
+	#Require ip 127.0.0.1
+        #Require ip ::1
+        Require all granted
+------
+
+Access phpmyadmin : http://[ipaddress]/phpmyadmin
+
+
+ALLOW OVERIDE
+Access httpd config files (/etc/httpd/conf.httpd.conf)
+edit the file:
+     AllowOverride None
+	to
+     AllowOverride All
+save the file and restart the service
+
+
+ACCESSING SERVER USING ssh KEYS
+access /etc/ssh/sshd_config file
+update it: PasswordAuthentication no
+
+
+CONDA
+Conda, a package and environment management system. 
+Conda allows you to create isolated environments with specific Python versions and packages. 
+You can install Conda and create an environment.
+
+Download Conda Installer:
+- wget https://repo.anaconda.com/miniconda/Miniconda3-4.10.3-Linux-x86_64.sh
+
+Make installer executable:
+- chmod +x Miniconda3-VERSION-Linux-x86_64.sh
+
+Run the installer:
+- ./Miniconda3-VERSION-Linux-x86_64.sh
+
+Restart session then verify conda version:
+- conda --version
+
+Create Conda Environments:
+- conda create -n py37 python=3.7
+
+Activate Environments:
+- conda activate py37
+
+Deactivate Environments:
+- conda deactivate
+
+
+NOHUP
+Run a process in the background:
+- nohup [...process...]
+
+kill a process
+- kill PID #PID is the process ID
+
+check running nohup processes:
+- ps aux | grep 'nohup'
+
+
+CHECKING ACTIVE PORTS
+- sudo netstat -nlp
+
+
+PHP MAKING INTERNAL CALLS CONNECTION ERROR
+https://stackoverflow.com/questions/46672070/php-curl-to-localhost-returns-permission-denied-on-an-open-port
+
+
+SET UP TOMCAT TO START ON OS BOOT
+Create a systemd service unit:
+- sudo nano /etc/systemd/system/tomcat.service
+
+Add configuration:
+[Unit]
+Description=Apache Tomcat Web Application Container
+After=syslog.target network.target
+
+[Service]
+Type=forking
+ExecStart=/opt/tomcat/bin/startup.sh
+ExecStop=/opt/tomcat/bin/shutdown.sh
+User=tomcat
+Group=tomcat
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+Reload Systemd and enable service:
+- sudo systemctl daemon-reload
+- sudo systemctl enable tomcat
+
+Start Tomcat service:
+- sudo systemctl start tomcat
+
+Verify Status:
+- sudo systemctl status tomcat
+
+Reboot to test:
+- sudo reboot
