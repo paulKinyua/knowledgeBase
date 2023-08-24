@@ -150,6 +150,7 @@ check running nohup processes:
 
 CHECKING ACTIVE PORTS
 - sudo netstat -nlp
+- netstat -lntp | grep [port number6]
 
 
 PHP MAKING INTERNAL CALLS CONNECTION ERROR

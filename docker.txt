@@ -1,0 +1,37 @@
+DOCKER
+https://www.youtube.com/watch?v=nUs6k2h1Z2w&list=PLQH1-k79HB396mS8xRQ5gih5iqkQw-4aV&index=4&ab_channel=GaryClarke
+#When using docker to containerise your project, you 
+#will have to make 2 files:
+
+# first file is a yaml file. It will be located at the root
+# directory. This file will contain the specifications for the 
+# container. Below is a sample of a yaml file
+
+	services:
+	  #nginx
+	
+	  web:
+	    image: nginx:latest
+	    ports:
+	      - "80:80"
+
+	  app:
+	    build:
+	      dockerfile: ./php/Dockerfile
+	  
+
+# The next file is a Dockerfile 
+# this file is responsible for holding the project. 
+# below is  a sample of a docker file.
+
+	FROM php
+	WORKDIR /app
+	COPY ./.htaccess index.php app ./
+	EXPOSE 3000
+	CMD [ "php", "-S", "0.0.0.0:3000"] 
+
+#to build a docker file you'll run the command below on CMD
+docker build -t paulk:php -f php/Dockefile .
+# -t allows us to assign a name to the container(paulK:php)
+# -f allows us to specify the location of the Dockerfile
+
