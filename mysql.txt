@@ -1,10 +1,16 @@
 MYSQL:
 mysql -u root -p #you will be prompted to enter db password
+mysql -u root -p -S /var/lib/mysql/mysql.sock #include socket file in the command.
+
 
 SHOW TABLES; #show tables
 
 DESCRIBE TableName; # show columns
 
-
+ALTER TABLE Transactions
+ADD Bank_Trans_ID varchar(255);
 
 SELECT id, businessName, partnerTypeId, bankCode FROM Partner;
+
+mysql dump
+mysqldump -u root -p AgencyBanking > mydb_backup.sql

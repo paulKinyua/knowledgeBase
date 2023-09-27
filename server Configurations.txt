@@ -190,3 +190,15 @@ Verify Status:
 
 Reboot to test:
 - sudo reboot
+
+
+Clear Cache (centos 7):
+- sudo systemctl restart systemd-resolved
+- sudo yum clean all
+- sudo dnf clean all (for DNF)
+
+Hostname Set Up:
+https://serverfault.com/questions/331936/setting-the-hostname-fqdn-or-short-name/331942#331942
+https://serverfault.com/questions/369415/configure-domain-name-in-centos
+ 
+- 

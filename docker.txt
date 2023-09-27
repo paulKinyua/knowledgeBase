@@ -22,6 +22,10 @@ https://www.youtube.com/watch?v=nUs6k2h1Z2w&list=PLQH1-k79HB396mS8xRQ5gih5iqkQw-
 	    build:
 	      dockerfile: ./php/Dockerfile
 	  
+#once done with the yaml file, run docker compose up on the terminal. When everything is done running, go to your browser and check
+# localhost:80. It should return nginx. By running docker ps on command prompt, you will see the details of the running container
+# docker compose ps will show you which services are running. If you would like to run compose up and still continue using terminal, 
+#run docker compose up -d 
 
 # The next file is a Dockerfile 
 # this file is responsible for holding the project. 
@@ -37,4 +41,11 @@ https://www.youtube.com/watch?v=nUs6k2h1Z2w&list=PLQH1-k79HB396mS8xRQ5gih5iqkQw-
 docker build -t paulk:php -f php/Dockefile .
 # -t allows us to assign a name to the container(paulK:php)
 # -f allows us to specify the location of the Dockerfile
+# once the docker file has been successfully built, you will find it located in the docker app.
+
+docker compose ps - show the containers that are running
+
+########
+NGINX CONFIGURATION
+########
 
