@@ -26,6 +26,13 @@ sudo yum update (update OS)
 sudo firewall-cmd --add-service=http --permanent && sudo firewall-cmd --add-service=https --permanent
 sudo systemctl restart firewalld
 ------
+
+
+----open a port to external traffic----
+sudo firewall-cmd --add-port=portnumber/protocol
+e.g:
+sudo firewall-cmd --permanent --add-port=5000/tcp
+---------------------------------------
 sudo yum install httpd (install apache using yum)
 https://www.linode.com/docs/guides/install-and-configure-apache-on-centos-7/
 sudo systemctl enable httpd.service (enable apache to start at boot)
@@ -201,4 +208,5 @@ Hostname Set Up:
 https://serverfault.com/questions/331936/setting-the-hostname-fqdn-or-short-name/331942#331942
 https://serverfault.com/questions/369415/configure-domain-name-in-centos
  
-- 
+- ssh to a remote server
+ssh remote_username@remote_host
