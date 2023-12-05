@@ -111,12 +111,27 @@ edit the file:
      AllowOverride All
 save the file and restart the service
 
-
+------------------------------------------------------------
 ACCESSING SERVER USING ssh KEYS
 access /etc/ssh/sshd_config file
 update it: PasswordAuthentication no
 
+using putty key gen, create new keys and save the public key in the server while you use to private key to access the server
+/root/.ssh/authorized_keys file
+you will paste the public key here
 
+sudo systemctl restart sshd
+
+------------------------------------------------------------
+
+SSL KEYS 
+
+visit certbot site and follow the instructions:
+https://certbot.eff.org/
+
+Use: https://letsencrypt.org/ as a point reference
+
+-------------------------------------------------------------
 CONDA
 Conda, a package and environment management system. 
 Conda allows you to create isolated environments with specific Python versions and packages. 

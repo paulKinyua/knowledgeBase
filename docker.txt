@@ -49,3 +49,27 @@ docker compose ps - show the containers that are running
 NGINX CONFIGURATION
 ########
 
+------------------------------------------------------------------------------------------------------------------------------
+ Step 1:
+Create a docker file
+
+ Step 2:
+Build the docker file, run;
+	"docker build -t image_name ."
+
+ Step 3:
+Run the application:
+	"docker run -d -p 5002:5002 face_matching"
+
+---	----	----	----
+check running containers:
+	docker ps
+
+dislay all images:
+	docker images
+
+view container logs:
+	docker logs -f container_id
+
+Remove unused resources, free up space and keep the system clean
+docker container prune

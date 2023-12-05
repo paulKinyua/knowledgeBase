@@ -14,3 +14,4 @@ SELECT id, businessName, partnerTypeId, bankCode FROM Partner;
 
 mysql dump
 mysqldump -u root -p AgencyBanking > mydb_backup.sql
+
