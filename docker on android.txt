@@ -69,4 +69,19 @@ step 2:
 - run apk update to update the new repositories added
 
 step 3:
+run apk add docker
 
+step 4:
+- run service docker start
+- check if docker is up by running service docker status
+
+step 5:
+- check if docker was successfully installed by running:
+	docker run hello-world
+
+Refer to the video below to complete the setup:
+https://www.youtube.com/watch?v=pR5jOQnfNtY&ab_channel=TechnicalBot
+
+RUNNING DOCKER WITH GUI:
+Refer to the video below:
+https://www.youtube.com/watch?v=xiMJpaWi5Nk&ab_channel=TechnicalBot
