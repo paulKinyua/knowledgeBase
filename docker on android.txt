@@ -1,0 +1,72 @@
+SETTING UP A VM ON AN ANDROID DEVICE:
+Requirements:
+- Android phone with at least 3GB RAM
+- Install Termux from playstore
+
+Step 1:
+update pakages, run
+pkg update
+
+Step 2:
+Install hypervisor by running:
+pkg install qemu-system-x86-64-headless qemu-uils wget -y
+
+Step 3:
+Install OS (Alpine linux):
+- start by making a directory:
+	mkdir alpine
+	cd alpine
+
+- get the download link for alpine linux from their website (x86-64 virtual version)
+	wget https://dl-cdn.alpinelinux.org/alpine/v3.19/releases/x86_64/alpine-virt-3.19.0-x86_64.iso
+
+- create a virtual image that will be used to install the OS
+	qemu-img create -f qcow2 alpine.qcow2 10G
+
+- run the virtual image
+	qemu-system-x86_64 -m 512 -netdev user, id=n1, hostfwd=tcp::2222-:22 -device virtio-net,netdev=n1 -cdrom alpine-virt-3.18.0-x86_64.iso -nographic alpine.qcow2
+
+- after running, you will be promoted to login, use root as the username
+
+- once you login, create a udhcpc file and edit it
+	mkdir -p /etc/udhcpc
+	vi /etc/udhcpc/udhcpc.conf
+
+- add the following line to the udhcpc.conf file
+	RESOLV_CONF="no"
+
+- work on the resolv.conf file next by adding the nameserver for the server
+	vi /etc/resolv.conf
+
+- add the following lines to the resolv.conf file
+	nameserver 8.8.8.8
+	nameserver  8.8.4.4
+
+- once done, set up alpine 
+	setup-alpine
+
+- you will be prompted to enter a number of details to finish up the setup
+
+- once successfully done, open a new session on termux and run the following command
+	echo "qemu-system-x86_64 -m 512 -netdev user, id=n1, hostfwd=tcp::2222-:22 -device virtio-net,netdev=n1 -cdrom alpine-virt-3.18.0-x86_64.iso -nographic alpine.qcow2" >> alpine.sh
+- The command above will create an alpine.sh file that will be used to start the alpine vm.
+
+- If you would like to start the server, go to the file that contains the alpine.sh file and run bash alpine.sh
+
+Refer to the video:
+https://www.youtube.com/watch?v=prpa58OEmzs&ab_channel=TechnicalBot
+	
+
+SETTING UP DOCKER:
+step 1:
+start alpine
+
+step 2:
+- run vi etc/apk/repositories
+- update the file by ensuring the 2 lines are uncommented
+	http://dl-cdn.alpinelinux.org/alpine/v3.18/main
+	http://dl-cdn.alpinelinux.org/alpine/v3.18/community
+- run apk update to update the new repositories added
+
+step 3:
+
