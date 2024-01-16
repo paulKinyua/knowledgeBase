@@ -1,0 +1,30 @@
+#DEPLOY PORTAL UI
+
+cd ~/projects/agencybanking_portal/static-server/
+pm2 start index.js --name agencybanking_portal
+
+#DEPLOY TRANSACTIONS UI
+
+cd ~/projects/agencybanking_transactions/static-server
+pm2 start index.js --name agencybanking_transactions
+
+#DEPLOY WEBSOCKET SERVER
+
+cd ~/projects/agencybanking_node_ws
+pm2 start server.js --name agencybanking_node_ws
+
+#DEPLOY SMS SERVER
+
+cd ~/project/africas-talking-node
+nohup npm start &
+
+#DEPLOY JAVA DOCKER IMAGE
+
+cd ~/projects/agencybanking_ms_java_docker
+docker build -f Dockerfile-mvp1 -t agb-java-mvp1:1.0 .
+    In case of error:
+    docker rm agb-java-mvp1:1.0
+docker run -d -v agb-data-bind:/root/agency-banking --network agb-overlay-network --name agb-mvp1 -p 8080:8080 -p 8443:8443 agb-java-mvp1:1.0
+    In case of error:
+    docker rmi agb-mvp1
+
